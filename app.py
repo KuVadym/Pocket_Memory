@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from core.config import settings
 from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
+# from motor.motor_asyncio import AsyncIOMotorClient
 from models.models_mongo import *
 from api.api_v1.router import router
 from schemas.note_schema import NoteAuth
@@ -373,14 +373,16 @@ async def logout(request: Request):
 
 
 @app.on_event("startup")
-async def app_init():
-    """
-        initialize crucial application services
-    """
-    db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
-    await init_beanie(
-        database=db_client,
-        document_models= [Note, Tag, Record, Emails, Phones, Records, User])
+async def start_db():
+    await init_db()
+# async def init_db():
+#     """
+#         initialize crucial application services
+#     """
+#     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
+#     await init_beanie(
+#         database=db_client,
+#         document_models= [Note, Tag, Record, Emails, Phones, Records, User])
 
 
 web_router = APIRouter()

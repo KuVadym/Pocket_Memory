@@ -3,7 +3,9 @@ from typing import Optional
 from beanie import Document, Indexed, Link, before_event, Replace, Insert
 from pydantic import BaseModel, EmailStr, Field
 from uuid import UUID, uuid4
-
+from beanie import init_beanie
+from motor.motor_asyncio import AsyncIOMotorClient
+from core.config import settings
 
 class User(Document):
     user_id: UUID = Field(default_factory=uuid4)
@@ -118,3 +120,13 @@ class Records(Document):
 class File(Document): # Now I don't know how it shoud work 
     name = str
     link = str
+
+
+async def init_db():
+    """
+        initialize crucial application services
+    """
+    db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
+    await init_beanie(
+        database=db_client,
+        document_models= [Note, Tag, Record, Emails, Phones, Records, User])
