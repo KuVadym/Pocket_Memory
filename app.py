@@ -353,7 +353,7 @@ async def signup(request: Request):
             redirectresponse.set_cookie(key="refresh_token",
                                 value=f'{token.get("refresh_token")}')
             return redirectresponse
-    return templates.TemplateResponse("/signup", context={"request": request})
+    return templates.TemplateResponse("/login.html", context={"request": request})
 
 
 @app.get('/presentation', response_class=HTMLResponse)
