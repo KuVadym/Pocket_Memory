@@ -12,9 +12,10 @@ class File(Document): # Now I don't know how it shoud work
     name = str
     link = str
 
-# DROPBOX_ACCESS_TOKEN = ''
 
-base64_DROPBOX_ACCESS_TOKEN = 'c2wuQlFfZzZEVWJoRGpKY0xwM0M2cmNaNWR6SjJpUFZQa0N4N1BlbEM3eGs1M3BWNkY5M3RJcnhpaFZwYjdaZlpzOWF2REdldzViaGkzaEJ2RWtWaEd4UTJ4NHdNYUdoY3RlVmdsWFNzMmktWURRQkhjTWxZUGVmeHBzU3dmSDNGWjVqa3FTZ3ZyYzBwODk='
+
+base64_DROPBOX_ACCESS_TOKEN = 'c2wuQlJ6VXJvV1p1NU9NcWpDSzVXWVpSWWxmejRkWkdVOFc1aEVIOHhtbHdUREYzajY5MVdaR2s3eHlLS0I1SDBYcVRJeHNIYTh0UkVvWml0NlU4d2FQbWJYUFVsWWFaOVJWSk0yT0M2VVRtRmdqa0p0dE9xcWNyakNzSzhrYXl0UEwtYkFjWmJaLW80THQ='
+
 
 base64_bytes = base64_DROPBOX_ACCESS_TOKEN.encode('ascii')
 message_bytes = base64.b64decode(base64_bytes)
