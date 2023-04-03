@@ -374,6 +374,7 @@ async def logout(request: Request):
 
 @app.on_event("startup")
 async def start_db():
+    print("start db")
     await init_db()
 # async def init_db():
 #     """
