@@ -372,10 +372,10 @@ async def logout(request: Request):
     return redirectresponse
 
 
-@app.on_event("startup")
-async def start_db():
-    print("start db")
-    await init_db()
+# @app.on_event("startup")
+# async def start_db():
+#     print("start db")
+#     await init_db()
 # async def init_db():
 #     """
 #         initialize crucial application services
@@ -402,3 +402,4 @@ if __name__ == "__main__":
                             host="0.0.0.0")
     server = uvicorn.Server(config)
     server.run()
+    init_db()
