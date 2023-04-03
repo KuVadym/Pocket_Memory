@@ -127,8 +127,8 @@ async def init_db():
         initialize crucial application services
     """
     print("getting connection string")
-    db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
+    db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING)
     print(f"Get str {settings.MONGO_CONNECTION_STRING}")
     await init_beanie(
-        database=db_client,
+        database=db_client.db_name,
         document_models= [Note, Tag, Record, Emails, Phones, Records, User])
