@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "My_Helper_Two"
 
     # Database
-    MONGO_CONNECTION_STRING: str = config("MONGODB_URI", cast=str)
+    MONGO_CONNECTION_STRING: str = config("MONGO_CONNECTION_STRING", cast=str)
 
     class Config:
         case_sensitive = True
