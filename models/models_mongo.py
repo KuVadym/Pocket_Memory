@@ -128,5 +128,5 @@ async def init_db():
     """
     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
     await init_beanie(
-        database=db_client.db_name,
+        database=db_client,
         document_models= [Note, Tag, Record, Emails, Phones, Records, User])
