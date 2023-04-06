@@ -398,6 +398,7 @@ if __name__ == "__main__":
                             port=8080, 
                             log_level="info", 
                             reload=False,
-                            host="0.0.0.0")
+                            host="0.0.0.0",
+                            forwarded_allow_ips='*')
     server = uvicorn.Server(config)
     server.run()
