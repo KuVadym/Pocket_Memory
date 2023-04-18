@@ -5,6 +5,7 @@ from services.user_service import UserService
 import pymongo
 from models.models_mongo import User
 from api.deps.user_deps import get_current_user
+from e_mail import send_email
 
 
 user_router = APIRouter()
@@ -35,3 +36,7 @@ async def update_user(data: UserUpdate, user: User = Depends(get_current_user)):
             detail="User does not exist"
         )
         
+
+async def send_email_route(to_email: str, subject: str, body: str):
+    send_email(to_email, subject, body)
+    return {'message': 'Email sent successfully'}

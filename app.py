@@ -24,6 +24,7 @@ from scrap.scrap import scraping
 from api.api_v1.hendlers.record import *
 from api.api_v1.hendlers import note
 from services.dbox import *
+from e_mail import send_email
 
 
 
@@ -370,6 +371,12 @@ async def logout(request: Request):
     redirectresponse.delete_cookie(key ='refresh_token')
     redirectresponse.delete_cookie(key ='user_dropbox_access_token')
     return redirectresponse
+
+
+@app.post('/send_email')
+async def send_email_route(to_email: str, subject: str, body: str):
+    send_email(to_email, subject, body)
+    return {'message': 'Email sent successfully'}
 
 
 @app.on_event("startup")
