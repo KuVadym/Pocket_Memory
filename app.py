@@ -6,7 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from core.config import settings
 from beanie import init_beanie
-from motor.motor_asyncio import AsyncIOMotorClient
+# from motor.motor_asyncio import AsyncIOMotorClient
 from models.models_mongo import *
 from api.api_v1.router import router
 from schemas.note_schema import NoteAuth
@@ -24,6 +24,7 @@ from scrap.scrap import scraping
 from api.api_v1.hendlers.record import *
 from api.api_v1.hendlers import note
 from services.dbox import *
+from e_mail import send_email
 
 
 
@@ -353,7 +354,7 @@ async def signup(request: Request):
             redirectresponse.set_cookie(key="refresh_token",
                                 value=f'{token.get("refresh_token")}')
             return redirectresponse
-    return templates.TemplateResponse("/signup", context={"request": request})
+    return templates.TemplateResponse("/login.html", context={"request": request})
 
 
 @app.get('/presentation', response_class=HTMLResponse)
@@ -372,15 +373,23 @@ async def logout(request: Request):
     return redirectresponse
 
 
+@app.post('/send_email')
+async def send_email_route(to_email: str, subject: str, body: str):
+    send_email(to_email, subject, body)
+    return {'message': 'Email sent successfully'}
+
+
 @app.on_event("startup")
-async def app_init():
-    """
-        initialize crucial application services
-    """
-    db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
-    await init_beanie(
-        database=db_client,
-        document_models= [Note, Tag, Record, Emails, Phones, Records, User])
+async def start_db():
+    await init_db()
+# async def init_db():
+#     """
+#         initialize crucial application services
+#     """
+#     db_client = AsyncIOMotorClient(settings.MONGO_CONNECTION_STRING).MyHelperMongoDB
+#     await init_beanie(
+#         database=db_client,
+#         document_models= [Note, Tag, Record, Emails, Phones, Records, User])
 
 
 web_router = APIRouter()
@@ -393,9 +402,10 @@ app.include_router(router, prefix=settings.API_V1_STR)
 # uvicorn app:app --reload
 if __name__ == "__main__":
     config = uvicorn.Config("app:app", 
-                            port=8000, 
+                            port=8080, 
                             log_level="info", 
                             reload=False,
-                            host="0.0.0.0")
+                            host="0.0.0.0",
+                            forwarded_allow_ips='*')
     server = uvicorn.Server(config)
     server.run()
