@@ -4,6 +4,7 @@ from schemas.user_schema import UserAuth
 from models.models_mongo import User
 from core.security import get_password, verify_password
 import pymongo
+from utils.regex import check_user_name
 
 from schemas.user_schema import UserUpdate
 
@@ -11,14 +12,20 @@ from schemas.user_schema import UserUpdate
 class UserService:
     @staticmethod
     async def create_user(user: UserAuth):
-        user_in = User(
-            username=user.username,
-            email=user.email,
-            hashed_password=get_password(user.password)
-        )
-        await user_in.save()
+        if check_user_name(user.password):
+            user_in = User(
+                username=user.username,
+                email=user.email,
+                hashed_password=get_password(user.password)
+            )
+
+            await user_in.save()
+            print("New user was created")
+        else:
+            print("User was not created. Try a password 4-20 character length.")
+            return None
         return user_in
-    
+
     @staticmethod
     async def authenticate(email: str, password: str) -> Optional[User]:
         user = await UserService.get_user_by_email(email=email)
