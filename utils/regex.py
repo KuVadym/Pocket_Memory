@@ -31,7 +31,7 @@ def check_birthday(birthday:str):
 
 def check_user_name(username:str):
     if isinstance(username, str):
-        pattern = re.compile("[a-zA-Z0-9/\\._\\-!]{4:20}")
+        pattern = re.compile("[a-zA-Z0-9/\\._\\-!]")
         result = bool(re.match(pattern=pattern, string=username))
     else:
         result = False
@@ -39,9 +39,9 @@ def check_user_name(username:str):
 
 
 def check_note_name(notename:str):
-    if isinstance(notename, str):
-        pattern = re.compile("[a-zA-Z0-9/\\._\\-!,]{4:50}")
-        result = bool(re.match(pattern=pattern, string=notename))
+    if isinstance(notename.name, str):
+        pattern = re.compile("[a-zA-Z0-9/\\._\\-!,]")
+        result = bool(re.match(pattern=pattern, string=notename.name))
     else:
         result = False
     return result
