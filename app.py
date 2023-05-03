@@ -52,7 +52,7 @@ def main_scrap():
         time.sleep(900)  # перезапуск каждые 15 минут
 
 
-# Thread(target=main_scrap, args=()).start()
+Thread(target=main_scrap, args=()).start()
 
 
 recordService = RecordService()

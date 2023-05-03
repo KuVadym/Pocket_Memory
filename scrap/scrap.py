@@ -3,24 +3,24 @@ import configparser
 from bs4 import BeautifulSoup
 import os
 
-
 def scraping():
-    # --------database or ini------------------------
-    path = os.path.dirname(os.path.abspath(__file__))
+    #--------database or ini------------------------
+    path = os.getcwd()
     conf = configparser.ConfigParser()
-    conf.read(path + r"/config/config.ini")
+    conf.read(path+"\\scrap\\config\\config.ini")
     # conf.read(path+"\\config\\config.ini")
-    url1 = conf.get('DB', 'URL1')
-    url2 = conf.get('DB', 'URL2')
-    url3 = conf.get('DB', 'URL3')
-    url4 = conf.get('DB', 'URL4')
-    url5 = conf.get('DB', 'URL5')
-    url6 = conf.get('DB', 'URL6')
-    url7 = conf.get('DB', 'URL7')
-    url8 = conf.get('DB', 'URL8')
-    url9 = conf.get('DB', 'URL9')
-    url10 = conf.get('DB', 'URL10')
-    url11 = conf.get('DB', 'URL11')
+    url1=conf.get('DB', 'URL1')
+    url2=conf.get('DB', 'URL2')
+    url3=conf.get('DB', 'URL3')
+    url4=conf.get('DB', 'URL4')
+    url5=conf.get('DB', 'URL5')
+    url6=conf.get('DB', 'URL6')
+    url7=conf.get('DB', 'URL7')
+    url8=conf.get('DB', 'URL8')
+    url9=conf.get('DB', 'URL9')
+    url10=conf.get('DB', 'URL10')
+    url11=conf.get('DB', 'URL11')
+
 
     valute = {}
     news = {}
@@ -28,8 +28,7 @@ def scraping():
     weather = {}
 
     # фейковый заголовок, чтобы не раскрываться что мы - бот
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36'}
     # используем сессию, чтобы автоматически работать с куками
     work = Session()
 
@@ -44,12 +43,12 @@ def scraping():
             name = data[0].find('div', class_="names").text.strip()[:3]
             sold = data[0].find('div', class_="purchase").text.replace('\n', '')
             sale = data[0].find('div', class_="sale").text.replace('\n', '')
-            valute['bank1_eur'] = 'Privatbank ' + name + ' ' + sold + ' ' + sale
+            valute['bank1_eur'] = 'Privatbank '+name+' '+sold+' '+sale
             name = data[1].find('div', class_="names").text.strip()[:3]
             sold = data[1].find('div', class_="purchase").text.replace('\n', '')
             sale = data[1].find('div', class_="sale").text.replace('\n', '')
-            valute['bank1_usd'] = 'Privatbank ' + name + ' ' + sold + ' ' + sale
-
+            valute['bank1_usd'] = 'Privatbank '+name+' '+sold+' '+sale
+                
     def get_data_web2(url):
         pass
         response = work.get(url, headers=headers)
@@ -62,32 +61,29 @@ def scraping():
             data = datam[7].text.replace('\n', '')
             name = data[27:37]
             sold = data[55:63]
-            valute['bank2_usd'] = 'NBU ' + name + ' ' + sold
+            valute['bank2_usd'] = 'NBU '+name+' '+sold
             data = datam[8].text.replace('\n', '')
             name = data[27:37]
             sold = data[51:59]
-            valute['bank2_eur'] = 'NBU ' + name + '  ' + sold
+            valute['bank2_eur'] = 'NBU '+name+'  '+sold
 
     def get_data_web3(url):
         pass
         response = work.get(url, headers=headers)
         # print("Status: UKRSibbank", response.status_code)
         if response.status_code == 200:
-            try:
-                html = response.text
-                soup = BeautifulSoup(html, 'lxml')
-                datas = soup.find('tbody')
-                data = datas.find_all('td')
-                name = data[0].text.replace('\n', '')[:3]
-                sold = data[1].text.replace('\n', '')[7:12]
-                sale = data[2].text.replace('\n', '')[7:12]
-                valute['bank3_usd'] = 'UKRSibbank ' + name + ' ' + sold + ' ' + sale
-                name = data[4].text.replace('\n', '')[:3]
-                sold = data[5].text.replace('\n', '')[7:12]
-                sale = data[6].text.replace('\n', '')[7:12]
-                valute['bank3_eur'] = 'UKRSibbank ' + name + ' ' + sold + ' ' + sale
-            except:
-                pass
+            html = response.text
+            soup = BeautifulSoup(html, 'lxml')
+            datas = soup.find('ul', class_="exchange__wrap")
+            data = datas.find_all('div', class_="exchange__item-text")
+            name = data[0].text.replace('\n', '')[:3]
+            sold = data[1].text.replace('\n', '')[:4]
+            sale = data[2].text.replace('\n', '')[:4]
+            valute['bank3_usd'] = 'UKRSibbank '+name+' '+sold+' '+sale
+            name = data[4].text.replace('\n', '')[:3]
+            sold = data[5].text.replace('\n', '')[:4]
+            sale = data[6].text.replace('\n', '')[:4]
+            valute['bank3_eur'] = 'UKRSibbank '+name+' '+sold+' '+sale
 
     def get_data_web4(url):
         pass
@@ -96,7 +92,7 @@ def scraping():
         if response.status_code == 200:
             html = response.text
             soup = BeautifulSoup(html, 'lxml')
-            datas = soup.find('aside', class_="page_rightCol")
+            datas = soup.find('div', class_="section_content")
             data = datas.find_all('article', class_="newsImgRowTime")
             news['oboz1'] = data[0].text
             news['oboz1_href'] = data[0].find('a').get("href")
@@ -117,6 +113,7 @@ def scraping():
             news['korr1_href'] = data[0].find('a').get("href")
             news['korr2'] = data[1].text.strip()
             news['korr2_href'] = data[1].find('a').get("href")
+
 
     def get_data_web6(url):
         pass
@@ -172,6 +169,7 @@ def scraping():
     def get_data_web9(url):
         pass
         response = work.get(url, headers=headers)
+        # print("Status: Gismeteo Kyiv", response.status_code)
         if response.status_code == 200:
             response.encoding = 'utf8'
             html = response.text
@@ -179,9 +177,9 @@ def scraping():
             datas = soup.find('div', class_="weathertabs day-0")
             status = datas.find('a', class_="weathertab weathertab-block tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis1'] = 'Погода у Києві сьогодні - ' + status + ' ' + temp
+            weather['gis1'] = 'Погода в Киеве сейчас - ' + status + ' ' + temp
         else:
-            weather['gis1'] = 'Погода у Києві сьогодні - сервер временно не отвечает'
+            weather['gis1'] = 'Погода в Киеве сейчас - сервер временно не отвечает'
 
     def get_data_web10(url):
         pass
@@ -194,9 +192,10 @@ def scraping():
             datas = soup.find('div', class_="weathertabs day-0")
             status = datas.find('a', class_="weathertab weathertab-block tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis2'] = 'Погода у Вашингтоні сьогодні - ' + status + ' ' + temp
+            weather['gis2'] = 'Погода в Вашингтоне сейчас - ' + status + ' ' + temp
         else:
-            weather['gis2'] = 'Погода у Вашингтоні сьогодні - сервер временно не отвечает'
+            weather['gis2'] = 'Погода в Вашингтоне сейчас - сервер временно не отвечает'
+
 
     def get_data_web11(url):
         pass
@@ -209,13 +208,14 @@ def scraping():
             datas = soup.find('div', class_="weathertabs day-0")
             status = datas.find('a', class_="weathertab weathertab-block tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis3'] = 'Погода у Лондоні сьогодні - ' + status + ' ' + temp
+            weather['gis3'] = 'Погода в Лондоне сейчас - ' + status + ' ' + temp
         else:
-            weather['gis3'] = 'Погода у Лондоні сьогодні - сервер временно не отвечает'
+            weather['gis3'] = 'Погода в Лондоне сейчас - сервер временно не отвечает'
+
 
     get_data_web1(url1)
     get_data_web2(url2)
-    # get_data_web3(url3)
+    get_data_web3(url3)
     get_data_web4(url4)
     get_data_web5(url5)
     get_data_web6(url6)
@@ -224,8 +224,32 @@ def scraping():
     get_data_web9(url9)
     get_data_web10(url10)
     get_data_web11(url11)
+    # print(valute['bank1_usd'])
+    # print(valute['bank1_eur'])
+    # print(valute['bank2_usd'])
+    # print(valute['bank2_eur'])
+    # print(valute['bank3_usd'])
+    # print(valute['bank3_eur'])
+    # print(news['oboz1'])
+    # print(news['oboz2'])
+    # print(news['korr1'])
+    # print(news['korr2'])
+    # print(news['bbc1'])
+    # print(news['bbc2'])
+    # print(sport['foot1'])
+    # print(sport['foot2'])
+    # print(sport['foot3'])
+    # print(sport['box1'])
+    # print(sport['box2'])
+    # print(sport['box3'])
+    # print(weather['gis1'])
+    # print(weather['gis2'])
+    # print(weather['gis3'])
     return valute, news, sport, weather
 
-
-if __name__ == "__main__":
-    v, n, s, w = scraping()
+if __name__=="__main__":
+    v,n,s,w = scraping()
+    print(v)
+    print(n)
+    print(s)
+    print(w)
