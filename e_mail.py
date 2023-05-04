@@ -1,7 +1,7 @@
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from decouple import config
+# from decouple import config
 from core.config import settings
 from sendgrid.helpers.mail import (From, To, PlainTextContent, HtmlContent)
 

@@ -5,21 +5,33 @@ import os
 
 def scraping():
     #--------database or ini------------------------
-    path = os.getcwd()
-    conf = configparser.ConfigParser()
-    conf.read(path+"\\scrap\\config\\config.ini")
+    # path = os.getcwd()
+    # conf = configparser.ConfigParser()
+    # conf.read(path+"scrap/config/config.ini")
     # conf.read(path+"\\config\\config.ini")
-    url1=conf.get('DB', 'URL1')
-    url2=conf.get('DB', 'URL2')
-    url3=conf.get('DB', 'URL3')
-    url4=conf.get('DB', 'URL4')
-    url5=conf.get('DB', 'URL5')
-    url6=conf.get('DB', 'URL6')
-    url7=conf.get('DB', 'URL7')
-    url8=conf.get('DB', 'URL8')
-    url9=conf.get('DB', 'URL9')
-    url10=conf.get('DB', 'URL10')
-    url11=conf.get('DB', 'URL11')
+    # url1=conf.get('DB', 'URL1')
+    # url2=conf.get('DB', 'URL2')
+    # url3=conf.get('DB', 'URL3')
+    # url4=conf.get('DB', 'URL4')
+    # url5=conf.get('DB', 'URL5')
+    # url6=conf.get('DB', 'URL6')
+    # url7=conf.get('DB', 'URL7')
+    # url8=conf.get('DB', 'URL8')
+    # url9=conf.get('DB', 'URL9')
+    # url10=conf.get('DB', 'URL10')
+    # url11=conf.get('DB', 'URL11')
+
+    url1='https://privatbank.ua/ru/rates-archive'
+    url2='https://bank.gov.ua/ua/markets/exchangerates'
+    url3='https://my.ukrsibbank.com/ru/personal/operations/currency_exchange/'
+    url4='https://www.obozrevatel.com/'
+    url5='https://ua.korrespondent.net/'
+    url6='https://www.bbc.com/ukrainian/'
+    url7='https://sport.ua/uk/football/'
+    url8='https://sport.ua/uk/box/'
+    url9='https://www.gismeteo.ua/ua/weather-kyiv-4944/now/'
+    url10='https://www.gismeteo.ua/ua/weather-washington-7150/now/'
+    url11='https://www.gismeteo.ua/ua/weather-london-744/now/'
 
 
     valute = {}

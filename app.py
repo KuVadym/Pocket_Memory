@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from core.config import settings
-from beanie import init_beanie
+# from beanie import init_beanie
 # from motor.motor_asyncio import AsyncIOMotorClient
 from models.models_mongo import *
 from api.api_v1.router import router
@@ -52,7 +52,7 @@ def main_scrap():
         time.sleep(900)  # перезапуск каждые 15 минут
 
 
-# Thread(target=main_scrap, args=()).start()
+Thread(target=main_scrap, args=()).start()
 
 
 recordService = RecordService()
@@ -129,6 +129,7 @@ async def contacts(request: Request):
                                      {"request": request,
                                       "user": user.__dict__,
                                       "list":list_records,})
+
 
 
 @app.post('/contacts', response_class=HTMLResponse)
