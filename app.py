@@ -146,6 +146,10 @@ async def contacts(request: Request):
         return responses.RedirectResponse('/signup')
     if type(form) == ContactCreateForm:
         if await form.is_valid():
+            print(form.email)
+            print(type(form.email))
+            print(form.phones)
+            print(type(form.phones))
             data = RecordAuth(name=form.name,
                               birth_date=form.birth_date,
                               address=form.address,
@@ -156,6 +160,10 @@ async def contacts(request: Request):
             pass
     list_records = await list(user)
     if type(form) == ContactUpdateForm:
+        print(form.email)
+        print(type(form.email))
+        print(form.phones)
+        print(type(form.phones))
         data = RecordAuth(name=form.name, 
                           birth_date=form.birth_date,
                           address=form.address,
@@ -405,7 +413,7 @@ if __name__ == "__main__":
     config = uvicorn.Config("app:app", 
                             port=8080, 
                             log_level="info", 
-                            reload=True,
+                            reload=False,
                             host="0.0.0.0",
                             forwarded_allow_ips='*')
     server = uvicorn.Server(config)

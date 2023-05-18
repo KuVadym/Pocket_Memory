@@ -154,6 +154,7 @@
                               type="email"
                               id="emails"
                               name="new_emails"
+                              required
                               class="form-control"
                               value="{{listEmail.email}}"
                             />
@@ -179,6 +180,7 @@
                               type="phones"
                               id="phones"
                               name="new_phones"
+                              required
                               class="form-control"
                               pattern="^[0-9]{10}$"
                               value="{{listPhones.phone}}"
@@ -193,6 +195,7 @@
                               type="date"
                               id="birth_date"
                               name="new_birth_date"
+                              required
                               class="form-control"
                               value="{{contact.birth_date.strftime('%Y-%m-%d') if contact.birth_date else Date }}"
                             />

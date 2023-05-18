@@ -72,7 +72,7 @@ class Note(Document):
 
 class Emails(Document):
     id: UUID = Field(default_factory=uuid4, unique=True, alias='_id')
-    email: EmailStr
+    email: Optional[str]
 
     class Collection:
         name = 'email'
@@ -87,7 +87,7 @@ class Emails(Document):
 
 class Phones(Document):
     id: UUID = Field(default_factory=uuid4, unique=True)
-    phone: str
+    phone: Optional[str]
     class Collection:
         name = 'phone'
 

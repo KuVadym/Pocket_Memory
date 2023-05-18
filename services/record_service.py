@@ -23,8 +23,19 @@ class RecordService:
             email_list = []
             for email in record.emails:
                 email_list.append(Emails(email = email.email))
-            return email_list 
-        phones,emails = await create_phone(record), await create_email(record)
+            return email_list
+        try:
+            phones = await create_phone(record)
+            print(phones)
+        except:
+            phones = None
+            print(phones)
+        try:
+            emails = await create_email(record)
+            print(emails)
+        except:
+            emails = None
+            print(emails)
         bd = None
         if record.birth_date:
             bd = datetime(int(record.birth_date.split('-')[0]), int(record.birth_date.split('-')[1]), int(record.birth_date.split('-')[2][0:2]))

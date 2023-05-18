@@ -22,4 +22,3 @@ class RecordOut (BaseModel):
     emails: List[Emails]
     phones: List[Phones]
 
-    
