@@ -43,16 +43,22 @@ valute = {}
 news = {}
 sport = {}
 weather = {}
+reload_time = 0
 
 
 def main_scrap():
-    while True:
-        global valute, news, sport, weather
+    global valute, news, sport, weather, reload_time
+    if reload_time + 900 < int(time.time()):
         valute, news, sport, weather = scraping()
-        time.sleep(900)  # перезапуск каждые 15 минут
+        print('scrap new info')
+        reload_time = time.time()
+    # while True:
+    #     global valute, news, sport, weather
+    #     valute, news, sport, weather = scraping()
+    #     time.sleep(900)  # перезапуск каждые 15 минут
 
 
-Thread(target=main_scrap, args=()).start()
+# Thread(target=main_scrap, args=()).start()
 
 
 recordService = RecordService()
@@ -84,6 +90,7 @@ async def get_user(request):
 
 @app.get('/', response_class=HTMLResponse)
 async def home(request: Request):
+    main_scrap()
     if (request._cookies.get("access_token")):
         user = await get_user(request)
         return templates.TemplateResponse("index.html", 
@@ -103,6 +110,7 @@ async def home(request: Request):
 
 @app.post('/', response_class=HTMLResponse)
 async def home(request: Request):
+    main_scrap()
     user = await get_user(request)
     # x = await list(user)
     return templates.TemplateResponse("index.html",
