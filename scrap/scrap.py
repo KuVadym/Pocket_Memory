@@ -186,8 +186,8 @@ def scraping():
             response.encoding = 'utf8'
             html = response.text
             soup = BeautifulSoup(html, 'lxml')
-            datas = soup.find('div', class_="weathertabs day-0")
-            status = datas.find('a', class_="weathertab weathertab-block tooltip").get("data-text")
+            datas = soup.find('div', class_="day-0")
+            status = datas.find('a', class_="tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
             weather['gis1'] = 'Погода в Киеве сейчас - ' + status + ' ' + temp
         else:
@@ -228,12 +228,12 @@ def scraping():
     get_data_web1(url1)
     get_data_web2(url2)
     get_data_web3(url3)
-    get_data_web4(url4)
+    # get_data_web4(url4)
     get_data_web5(url5)
     get_data_web6(url6)
     get_data_web7(url7)
     get_data_web8(url8)
-    # get_data_web9(url9)
+    get_data_web9(url9)
     # get_data_web10(url10)
     # get_data_web11(url11)
     # print(valute['bank1_usd'])
