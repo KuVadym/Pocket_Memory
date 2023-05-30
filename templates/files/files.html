@@ -10,6 +10,10 @@
       integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
       crossorigin="anonymous"
     />
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link href="{{ url_for('static', path='styles.css') }}" rel="stylesheet" />
     <link
       rel="stylesheet"
@@ -29,9 +33,7 @@
       .btnIcon:focus > i {
         color: #007b5e;
       }
-      .container div {
-          float: left;
-        }
+      
         .col-1-2 {
           width: 50%;  
         }
@@ -69,20 +71,23 @@
     <section class="nav-section d-flex w-100">
       {% include 'components/nav.html' %}
     </section>
-    <section>
-    {% if not token %}
-    <p>Sorry our admin didn`t refresh access token for common dropbox cloud. But you can use your own dropbox cloud.</p>
-    {% endif %}
-    {% if token %}
-    <section>
-      <form method="post" action="/uploadfiles" enctype="multipart/form-data" class="d-flex align-content-center justify-content-center gap-3">
-        <div class="w-50">
-          <label for="file-text" class="form-label">Upload your common Files</label>
-          <input class="form-control" name="file" id="file" type="file" accept="image/*,.pdf,.doc," size="" onchange="document.getElementById('file-text').textContent = this.files.length > 0 ? this.files[0].name : 'Select a file'">
-        </div>
-          <button type="submit" class="btn btn-large btn-primary h-50 mt-auto">Upload</button>
-      </form>
-    </section>
+    <div class="container mt-5 flex-column">
+      {% if not token %} 
+              <div class="alert alert-danger flex-fill text-center" role="alert">
+          
+                <p class="lead">Sorry our admin didn`t refresh access token for common dropbox cloud. But you can use your own dropbox cloud.</p>
+              </div>
+      {% endif %}
+      {% if token %}
+      <section class="flex">
+        <form method="post" action="/uploadfiles" enctype="multipart/form-data" class="d-flex align-content-center justify-content-center gap-3">
+          <div class="w-50">
+            <!-- <label for="file-text" class="form-label">Upload your common Files</label> -->
+            <input class="form-control" name="file" id="file" type="file" accept="image/*,.pdf,.doc," size="" onchange="document.getElementById('file-text').textContent = this.files.length > 0 ? this.files[0].name : 'Select a file'">
+          </div>
+            <button type="submit" class="btn btn-large btn-primary h-50">Upload</button>
+        </form>
+      </section>
     {% endif %}
     {% if links %}
     {% for item in links%}
@@ -95,14 +100,17 @@
       {% endfor %}
       {% endif %}
     <div class="w-100">
-    Your own dropbox cloud
+    <h3 class="h3 mx-auto w-50 text-center">
+
+      Your own dropbox cloud
+    </h3>
         {% if user_token %}
         <form method="post" action="/uploadfiles" enctype="multipart/form-data" class="d-flex align-content-center justify-content-center gap-3">
           <div class="w-50">
-            <label for="file-text" class="form-label">Upload your own Files</label>
+            <!-- <label for="file-text" class="form-label">Upload your own Files</label> -->
             <input class="form-control" name="user_file" id="user_file" type="file" accept="image/*,.pdf,.doc," size="" onchange="document.getElementById('file-text').textContent = this.files.length > 0 ? this.files[0].name : 'Select a file'">
           </div>
-            <button type="submit" class="btn btn-large btn-primary h-50 mt-auto">Upload</button>
+            <button type="submit" class="btn btn-large btn-primary h-50 ">Upload</button>
         </form>
         {% if user_links %}
         <ul class="listLink">
@@ -122,17 +130,24 @@
           {%endif%}
         {% endif %}
         {% if not user_token %}
-        <form action="/uploadfiles" method="post">
-          <input type="text" id="token" name="token" class="token" value="Enter access token"/>
-          <button>Get access!</button>
-        </form>
-          <a href="https://dropbox.com/developers/reference/getting-started#app%20console">How use it.</a>
+        <form action="/uploadfiles" method="post"  class="d-flex align-content-center justify-content-center gap-3">
+          <div class="w-50 flex-nowrap">
+
+            <input type="text" id="token" name="token" class="form-control" value="Enter access token"/>
+          </div>
+          <button class="btn btn-primary h-50" type="button">Get access!</button>  
+          </form>
+          <div class="w-50 text-center mx-auto">
+
+            <a href="https://dropbox.com/developers/reference/getting-started#app%20console" class="mx-auto">How use it.</a>
+          </div>
         {% endif %}
   </section>
+</div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
       integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
       crossorigin="anonymous"
     ></script>
   </body>
-</html>Activate.ps1
+</html>
