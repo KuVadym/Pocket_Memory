@@ -257,7 +257,8 @@ async def files(request: Request):
                                       "links":links,
                                       "user_links":user_links,
                                       "token": token,
-                                      "user_token": user_token})
+                                      "user_token": user_token
+                                      })
 
 
 @app.post('/files', response_class=HTMLResponse)
@@ -421,7 +422,7 @@ if __name__ == "__main__":
     config = uvicorn.Config("app:app", 
                             port=8080, 
                             log_level="info", 
-                            reload=False,
+                            reload=True,
                             host="0.0.0.0",
                             forwarded_allow_ips='*')
     server = uvicorn.Server(config)
