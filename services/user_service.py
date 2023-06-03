@@ -51,6 +51,7 @@ class UserService:
         user = await User.find_one(User.user_id == id)
         if not user:
             raise pymongo.errors.OperationFailure("User not found")
-    
+        hash_pass = get_password(data.hashed_password)
+        data.hashed_password = hash_pass
         await user.update({"$set": data.dict(exclude_unset=True)})
         return user

@@ -24,7 +24,8 @@ from scrap.scrap import scraping
 from api.api_v1.hendlers.record import *
 from api.api_v1.hendlers import note
 from services.dbox import *
-from e_mail import send_email
+from utils.e_mail import send_email
+from utils.pass_gen import password_generator
 
 
 
@@ -345,13 +346,13 @@ async def signup(request: Request):
     if (await request.form()).get("registerName"):
         form = UserCreateForm(request)
     if (await request.form()).get("loginEmail"):
-        form = LoginForm(request) 
+        form = LoginForm(request)
     await form.load_data()
     if await form.is_valid():
         if type(form) == LoginForm:
             form.__dict__.update(msg="Login Successful :)")
             response = templates.TemplateResponse("dashboard/dashboard.html",
-                                                  form.__dict__)
+                                                form.__dict__)
             token = await login(response=response, form_data=form)
             redirectresponse = responses.RedirectResponse('/')
             redirectresponse.set_cookie(key="access_token",
@@ -362,11 +363,11 @@ async def signup(request: Request):
         elif type(form) == UserCreateForm:
             form.__dict__.update(msg="Login Successful :)")
             response = templates.TemplateResponse("dashboard/dashboard.html",
-                                                  form.__dict__)
+                                                form.__dict__)
             await create_user(data=form)
             form.username = form.email
             token = await login(response=response, form_data=form)
-            redirectresponse = responses.RedirectResponse('//')
+            redirectresponse = responses.RedirectResponse('/')
             redirectresponse.set_cookie(key="access_token",
                                 value=f'Bearer {token.get("access_token")}')
             redirectresponse.set_cookie(key="refresh_token",
@@ -392,9 +393,12 @@ async def logout(request: Request):
 
 
 @app.post('/send_email')
-async def send_email_route(to_email: str, subject: str, body: str):
-    send_email(to_email, subject, body)
-    return {'message': 'Email sent successfully'}
+async def send_email_route(request: Request):
+    print('start send_email route')
+    # redirectresponse = responses.RedirectResponse('/signup')
+    email = (await request.form()).get("email")
+    await send_email(to_email=email, subject='Your new password for Pocket Memory', body=password_generator())
+    return templates.TemplateResponse("/login.html", context={"request": request})
 
 
 @app.on_event("startup")

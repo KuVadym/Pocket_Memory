@@ -22,3 +22,4 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    hashed_password: str = Field(..., min_length=5, max_length=24, description="user password")

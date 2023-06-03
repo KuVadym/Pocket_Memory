@@ -143,11 +143,68 @@
                     >
                       Sign in
                     </button>
-
-                    <a href="#" class="link text-dark"> Forget Password? (function in development)</a>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
+                    <button
+                    type="button"
+                    class="btn btn-default btn-custom"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                  forgot password
+                  </button>
+                  <div
+                  class="modal fade"
+                  id="staticBackdrop"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">POCKET MEMORY</h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body">
+                        <form action="/send_email" method="POST">
+
+                          <div class="form-outline mb-4">
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              class="form-control"
+                              required
+                            />
+                            <label class="form-label" for="email">Email</label>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                          </button>
+                          <button type="submit" class="btn btn-primary btn-block">
+                              Send me new password
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                    <!-- <a href="#" class="link text-dark"> Forget Password? (function in development)</a> -->
+                  
+
               <div
                 class="tab-pane fade"
                 id="pills-register"

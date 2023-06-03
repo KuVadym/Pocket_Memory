@@ -5,7 +5,7 @@ from services.user_service import UserService
 import pymongo
 from models.models_mongo import User
 from api.deps.user_deps import get_current_user
-from e_mail import send_email
+from utils.e_mail import send_email
 
 
 user_router = APIRouter()
