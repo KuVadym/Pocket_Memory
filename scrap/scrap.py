@@ -189,9 +189,9 @@ def scraping():
             datas = soup.find('div', class_="day-0")
             status = datas.find('a', class_="tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis1'] = 'Погода в Киеве сейчас - ' + status + ' ' + temp
+            weather['gis1'] = 'Погода в Києві - ' + status + ' ' + temp
         else:
-            weather['gis1'] = 'Погода в Киеве сейчас - сервер временно не отвечает'
+            weather['gis1'] = 'Погода в Києві - сервер тимчасово не відповідає'
 
     def get_data_web10(url):
         pass
@@ -204,9 +204,9 @@ def scraping():
             datas = soup.find('div', class_="day-0")
             status = datas.find('a', class_="tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis2'] = 'Погода в Вашингтоне сейчас - ' + status + ' ' + temp
+            weather['gis2'] = 'Погода в Вашингтоні - ' + status + ' ' + temp
         else:
-            weather['gis2'] = 'Погода в Вашингтоне сейчас - сервер временно не отвечает'
+            weather['gis2'] = 'Погода в Вашингтоні - сервер тимчасово не відповідає'
 
 
     def get_data_web11(url):
@@ -220,9 +220,9 @@ def scraping():
             datas = soup.find('div', class_="day-0")
             status = datas.find('a', class_="tooltip").get("data-text")
             temp = datas.find('span', class_="unit unit_temperature_c").text
-            weather['gis3'] = 'Погода в Лондоне сейчас - ' + status + ' ' + temp
+            weather['gis3'] = 'Погода в Лондоні - ' + status + ' ' + temp
         else:
-            weather['gis3'] = 'Погода в Лондоне сейчас - сервер временно не отвечает'
+            weather['gis3'] = 'Погода в Лондоні - сервер тимчасово не відповідає'
 
     try:
         get_data_web1(url1)
